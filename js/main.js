@@ -1,7 +1,7 @@
 "use strict";
 /*
  * Laboration 5 - Studentkortsgenerator
- * Namn: DITT NAMN
+ * Namn: Tove Hansson
  */
 
 // Hämta element från DOM
@@ -119,6 +119,20 @@ function deleteHistory() {
 // - validera inmatningen
 // - skapa studentkort om valideringen lyckas
 
+form.addEventListener("submit", onSubmit);
+
+function onSubmit(event) {
+    event.preventDefault();
+
+    const fullname = fullnameInput.value;
+    const email = emailInput.value;
+    const phone = phoneInput.value;
+
+    console.log("Formuläret har skickats!");
+    console.log(fullname);
+    console.log(email);
+    console.log(phone);
+}
 
 // När användaren klickar på "Rensa"
 
