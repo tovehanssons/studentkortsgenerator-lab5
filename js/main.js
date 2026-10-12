@@ -127,6 +127,16 @@ function onSubmit(event) {
     const fullname = fullnameInput.value;
     const email = emailInput.value;
     const phone = phoneInput.value;
+    const font = fontSelect.value;
+
+    previewFullname.textContent = fullname;
+    previewEmail.textContent = email;
+    previewPhone.textContent = phone;
+
+    //Ändra typsnittet på studentkortet
+    previewFullname.style.fontFamily = font;
+    previewEmail.style.fontFamily = font;
+    previewPhone.style.fontFamily = font;
 
     console.log("Formuläret har skickats!");
     console.log(fullname);
