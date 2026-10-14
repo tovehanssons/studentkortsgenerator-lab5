@@ -221,3 +221,5 @@ function onSubmit(event) {
 
 // När sidan laddas:
 // - läs in och visa eventuell tidigare historik
+loadHistory();
+renderHistory();
