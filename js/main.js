@@ -51,12 +51,6 @@ function validateForm(fullname, email, phone) {
         validate = false;
     }
 
-    // Kontrollera att e-postadressen innehåller @
-    if (!email.includes("@")) {
-        errors.push("E-postadressen måste innehålla @.");
-        validate = false;
-    }
-
     // Kontrollera att telefonnumret är ifyllt
     if (phone.length === 0) {
         errors.push("Du måste ange ett telefonnummer.");
@@ -111,16 +105,27 @@ function createStudentCard() {
     previewPhone.style.fontFamily = font;
 
     // Lägg till studentkortet i historiken
+    const studentCard = {
+        fullname: fullname,
+        email: email,
+        phone: phone,
+        font: font
+    };
+
+    history.push(studentCard);
 
     // Spara och uppdatera historiken
+    saveHistory();
+    renderHistory();
 }
-
 
 /**
  * Sparar historiken i localStorage.
  */
 function saveHistory() {
     // Spara history i localStorage
+    const historyJson = JSON.stringify(history);
+    localStorage.setItem("history", historyJson);
 }
 
 
@@ -129,8 +134,14 @@ function saveHistory() {
  */
 function loadHistory() {
     // Hämta eventuell sparad historik
-
+    const localStorageData = localStorage.getItem("history");
     // Uppdatera history
+    history = JSON.parse(localStorageData);
+
+    if (history === null) {
+        history = [];
+
+    }
 }
 
 
@@ -139,10 +150,19 @@ function loadHistory() {
  */
 function renderHistory() {
     // Rensa tidigare visad historik
+    historySection.innerHTML = "";
 
     // Skriv ut innehållet i history till DOM
-}
+    for (let i = 0; i < history.length; i++) {
+        const sectionEl = document.createElement("section");
 
+        const pEl = document.createElement("p");
+        pEl.textContent = `Namn: ${history[i].fullname}, E-post: ${history[i].email}, Telefon: ${history[i].phone}`;
+
+        sectionEl.appendChild(pEl);
+        historySection.appendChild(sectionEl);
+    }
+}
 
 /**
  * Rensar formulär, aktuellt studentkort och felmeddelanden.
