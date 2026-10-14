@@ -34,12 +34,10 @@ let history = [];
  */
 
 // Kontrollera formulärets obligatoriska fält
-
 function validateForm(fullname, email, phone) {
     errors = [];
 
- // Kontrollera att ett fullständigt namn är ifyllt
-
+    // Kontrollera att ett fullständigt namn är ifyllt
     let validate = true;
 
     if (fullname === "") {
@@ -69,9 +67,9 @@ function validateForm(fullname, email, phone) {
     displayErrors();
 
     // Returnera resultatet (true eller false) av valideringen
-   return validate;
+    return validate;
 
-    }
+}
 
 
 /**
@@ -95,9 +93,22 @@ function displayErrors() {
  * Skapar ett studentkort och visar det på sidan.
  */
 function createStudentCard() {
+
     // Hämta information från formuläret
+    const fullname = fullnameInput.value.trim();
+    const email = emailInput.value.trim();
+    const phone = phoneInput.value.trim();
+    const font = fontSelect.value;
 
     // Uppdatera studentkortet
+    previewFullname.textContent = fullname;
+    previewEmail.textContent = email;
+    previewPhone.textContent = phone;
+
+    // Ändra typsnittet på studentkortet
+    previewFullname.style.fontFamily = font;
+    previewEmail.style.fontFamily = font;
+    previewPhone.style.fontFamily = font;
 
     // Lägg till studentkortet i historiken
 
@@ -168,7 +179,6 @@ function onSubmit(event) {
     const fullname = fullnameInput.value.trim();
     const email = emailInput.value.trim();
     const phone = phoneInput.value.trim();
-    const font = fontSelect.value;
 
     // Validera formuläret
     const validate = validateForm(fullname, email, phone);
@@ -178,15 +188,9 @@ function onSubmit(event) {
         return;
     }
 
-    // Visa studentkortet
-    previewFullname.textContent = fullname;
-    previewEmail.textContent = email;
-    previewPhone.textContent = phone;
+    // Skapa studentkortet
+    createStudentCard();
 
-      // Ändra typsnittet på studentkortet
-    previewFullname.style.fontFamily = font;
-    previewEmail.style.fontFamily = font;
-    previewPhone.style.fontFamily = font;
 }
 
 // När användaren klickar på "Rensa"
