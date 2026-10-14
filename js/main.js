@@ -21,9 +21,9 @@ const errorList = document.querySelector("#errorlist");
 const historySection = document.querySelector("#history");
 const deleteHistoryButton = document.querySelector("#delete");
 
-
 // Array som används för felmeddelanden
 let errors = [];
+
 
 // Array som innehåller sparade studentkort
 let history = [];
@@ -32,13 +32,46 @@ let history = [];
  * Validerar formulärets inmatning.
  * @returns {boolean}
  */
-function validateForm() {
-    // Kontrollera formulärets obligatoriska fält
+
+// Kontrollera formulärets obligatoriska fält
+
+function validateForm(fullname, email, phone) {
+    errors = [];
+
+ // Kontrollera att ett fullständigt namn är ifyllt
+
+    let validate = true;
+
+    if (fullname === "") {
+        errors.push("Du måste ange ett fullständigt namn.");
+        validate = false;
+    }
+
+    // Kontrollera att e-postadressen är ifylld
+    if (email.length === 0) {
+        errors.push("Du måste ange en e-postadress.");
+        validate = false;
+    }
+
+    // Kontrollera att e-postadressen innehåller @
+    if (!email.includes("@")) {
+        errors.push("E-postadressen måste innehålla @.");
+        validate = false;
+    }
+
+    // Kontrollera att telefonnumret är ifyllt
+    if (phone.length === 0) {
+        errors.push("Du måste ange ett telefonnummer.");
+        validate = false;
+    }
 
     // Visa eventuella felmeddelanden
+    displayErrors();
 
     // Returnera resultatet (true eller false) av valideringen
-}
+   return validate;
+
+    }
 
 
 /**
@@ -46,11 +79,18 @@ function validateForm() {
  */
 function displayErrors() {
     // Rensa tidigare felmeddelanden
+    errorList.innerHTML = "";
 
     // Skriv ut aktuella felmeddelanden till DOM
+    if (errors.length > 0) {
+        for (let i = 0; i < errors.length; i++) {
+            const li = document.createElement("li");
+            li.textContent = errors[i];
+
+            errorList.appendChild(li);
+        }
+    }
 }
-
-
 /**
  * Skapar ett studentkort och visar det på sidan.
  */
@@ -124,24 +164,29 @@ form.addEventListener("submit", onSubmit);
 function onSubmit(event) {
     event.preventDefault();
 
-    const fullname = fullnameInput.value;
-    const email = emailInput.value;
-    const phone = phoneInput.value;
+    // Läs in värden från formuläret
+    const fullname = fullnameInput.value.trim();
+    const email = emailInput.value.trim();
+    const phone = phoneInput.value.trim();
     const font = fontSelect.value;
 
+    // Validera formuläret
+    const validate = validateForm(fullname, email, phone);
+
+    // Kontrollera om fomuläret är korrekt ifyllt, annars inte (false).
+    if (validate === false) {
+        return;
+    }
+
+    // Visa studentkortet
     previewFullname.textContent = fullname;
     previewEmail.textContent = email;
     previewPhone.textContent = phone;
 
-    //Ändra typsnittet på studentkortet
+      // Ändra typsnittet på studentkortet
     previewFullname.style.fontFamily = font;
     previewEmail.style.fontFamily = font;
     previewPhone.style.fontFamily = font;
-
-    console.log("Formuläret har skickats!");
-    console.log(fullname);
-    console.log(email);
-    console.log(phone);
 }
 
 // När användaren klickar på "Rensa"
