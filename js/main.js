@@ -169,8 +169,22 @@ function renderHistory() {
  */
 function clearForm() {
     // Återställ formulär och studentkort
+    fullnameInput.value = "";
+    emailInput.value = "";
+    phoneInput.value = "";
+    fontSelect.value = "Georgia";
+
+    previewFullname.textContent = "Namn";
+    previewEmail.textContent = "E-post";
+    previewPhone.textContent = "Telefon";
+
+    previewFullname.style.fontFamily = "Georgia";
+    previewEmail.style.fontFamily = "Georgia";
+    previewPhone.style.fontFamily = "Georgia";
 
     // Rensa eventuella felmeddelanden
+errorList.innerHTML = "";
+
 }
 
 
@@ -214,7 +228,7 @@ function onSubmit(event) {
 }
 
 // När användaren klickar på "Rensa"
-
+clearButton.addEventListener("click", clearForm);
 
 // När användaren klickar på "Radera historik"
 
