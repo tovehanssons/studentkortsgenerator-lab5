@@ -193,9 +193,13 @@ errorList.innerHTML = "";
  */
 function deleteHistory() {
     // Radera sparad historik
-
+history = [];
+localStorage.removeItem("history");
     // Uppdatera history och visningen på sidan
+renderHistory();
+
 }
+
 
 
 // Eventlyssnare
@@ -231,7 +235,7 @@ function onSubmit(event) {
 clearButton.addEventListener("click", clearForm);
 
 // När användaren klickar på "Radera historik"
-
+deleteHistoryButton.addEventListener("click", deleteHistory);
 
 // När sidan laddas:
 // - läs in och visa eventuell tidigare historik
