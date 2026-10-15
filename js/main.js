@@ -37,11 +37,11 @@ let history = [];
 function validateForm(fullname, email, phone) {
     errors = [];
 
-    // Kontrollera att ett fullständigt namn är ifyllt
+    // Kontrollera att ett namn är ifyllt
     let validate = true;
 
     if (fullname === "") {
-        errors.push("Du måste ange ett fullständigt namn.");
+        errors.push("Du måste ange ett namn.");
         validate = false;
     }
 
@@ -88,7 +88,7 @@ function displayErrors() {
  */
 function createStudentCard() {
 
-    // Hämta information från formuläret
+    // Hämta info från formuläret
     const fullname = fullnameInput.value.trim();
     const email = emailInput.value.trim();
     const phone = phoneInput.value.trim();
@@ -128,7 +128,6 @@ function saveHistory() {
     localStorage.setItem("history", historyJson);
 }
 
-
 /**
  * Läser in tidigare historik från localStorage.
  */
@@ -144,7 +143,6 @@ function loadHistory() {
     }
 }
 
-
 /**
  * Visar historiken på sidan.
  */
@@ -153,7 +151,7 @@ function renderHistory() {
     historySection.innerHTML = "";
 
     // Skriv ut innehållet i history till DOM
-    for (let i = 0; i < history.length; i++) {
+    for (let i = history.length - 1; i >= 0; i--) {
         const sectionEl = document.createElement("section");
 
         const pEl = document.createElement("p");
@@ -183,24 +181,20 @@ function clearForm() {
     previewPhone.style.fontFamily = "Georgia";
 
     // Rensa eventuella felmeddelanden
-errorList.innerHTML = "";
-
+    errorList.innerHTML = "";
 }
-
 
 /**
  * Raderar hela historiken.
  */
 function deleteHistory() {
     // Radera sparad historik
-history = [];
-localStorage.removeItem("history");
+    history = [];
+    localStorage.removeItem("history");
+    
     // Uppdatera history och visningen på sidan
-renderHistory();
-
+    renderHistory();
 }
-
-
 
 // Eventlyssnare
 
@@ -228,7 +222,6 @@ function onSubmit(event) {
 
     // Skapa studentkortet
     createStudentCard();
-
 }
 
 // När användaren klickar på "Rensa"
